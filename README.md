@@ -4,11 +4,11 @@ This repo houses some boilerplate react code - the original repo can be found he
 
 To use this code clone the repo
 
-run npm run setup and then run npm start
+run 'npm run setup' and then run 'npm start'
 
 ## Why have we chosen to use this boilerplate code?
 
-We've chosen to use this boilerplate code to make the test quicker and easier for both you taking the test and us reviewing the test.
+We've chosen to use this boilerplate code to make the test quicker and easier for both you taking the test and us reviewing the test. With that said you're welcome to do whatever you like, don't feel compelled to use this boilerplate.
 
 ## What is the test?
 
