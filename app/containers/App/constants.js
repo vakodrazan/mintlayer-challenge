@@ -12,3 +12,6 @@
 export const LOAD_REPOS = 'boilerplate/App/LOAD_REPOS';
 export const LOAD_REPOS_SUCCESS = 'boilerplate/App/LOAD_REPOS_SUCCESS';
 export const LOAD_REPOS_ERROR = 'boilerplate/App/LOAD_REPOS_ERROR';
+export const LOAD_TICKER = 'boilerplate/App/LOAD_TICKER';
+export const LOAD_TICKER_SUCCESS = 'boilerplate/App/LOAD_TICKER_SUCCESS';
+export const LOAD_TICKER_ERROR = 'boilerplate/App/LOAD_TICKER_ERROR';

@@ -15,7 +15,14 @@
  *    }
  */
 
-import { LOAD_REPOS, LOAD_REPOS_SUCCESS, LOAD_REPOS_ERROR } from './constants';
+import {
+  LOAD_REPOS,
+  LOAD_REPOS_SUCCESS,
+  LOAD_REPOS_ERROR,
+  LOAD_TICKER,
+  LOAD_TICKER_SUCCESS,
+  LOAD_TICKER_ERROR,
+} from './constants';
 
 /**
  * Load the repositories, this action starts the request saga
@@ -25,6 +32,12 @@ import { LOAD_REPOS, LOAD_REPOS_SUCCESS, LOAD_REPOS_ERROR } from './constants';
 export function loadRepos() {
   return {
     type: LOAD_REPOS,
+  };
+}
+
+export function loadTicker() {
+  return {
+    type: LOAD_TICKER,
   };
 }
 
@@ -44,6 +57,13 @@ export function reposLoaded(repos, username) {
   };
 }
 
+export function tickerLoaded(ticker) {
+  return {
+    type: LOAD_TICKER_SUCCESS,
+    ticker,
+  };
+}
+
 /**
  * Dispatched when loading the repositories fails
  *
@@ -54,6 +74,13 @@ export function reposLoaded(repos, username) {
 export function repoLoadingError(error) {
   return {
     type: LOAD_REPOS_ERROR,
+    error,
+  };
+}
+
+export function tickerLoadingError(error) {
+  return {
+    type: LOAD_TICKER_ERROR,
     error,
   };
 }
