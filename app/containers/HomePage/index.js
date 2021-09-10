@@ -21,6 +21,9 @@ import saga from './saga';
 import { selectTicker } from './actions';
 import { makeSelectTickerSymbol } from './selectors';
 import TickerInfo from '../../components/TickerInfo';
+import SelectDropDown from '../../components/SelectDropdown';
+import Option from '../../components/Option';
+import Wrapper from '../../components/Wrapper';
 
 const key = 'home';
 
@@ -65,19 +68,14 @@ export function HomePage({
   const tickerList = ticker && ticker.tickerList ? ticker.tickerList : [];
 
   return (
-    <article>
-      <select onChange={onChangeTicker} value={selectedTicker}>
-        {tickerList.map(item => {
-          const tickerSymbol = item[0];
-          return (
-            <option key={tickerSymbol} value={tickerSymbol}>
-              {tickerSymbol}
-            </option>
-          );
-        })}
-      </select>
+    <Wrapper>
+      <SelectDropDown onChange={onChangeTicker} value={selectedTicker}>
+        {tickerList.map(item => (
+          <Option key={item[0]} item={item} />
+        ))}
+      </SelectDropDown>
       <TickerInfo {...tickerListProps} />
-    </article>
+    </Wrapper>
   );
 }
 

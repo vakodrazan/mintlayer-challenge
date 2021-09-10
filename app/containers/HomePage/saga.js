@@ -31,7 +31,6 @@ export function* getRepos() {
   const requestURL = `https://api.github.com/users/${username}/repos?type=all&sort=updated`;
 
   try {
-    // Call our request helper (see 'utils/request')
     const repos = yield call(request, requestURL);
     yield put(reposLoaded(repos, username));
   } catch (err) {
@@ -49,7 +48,6 @@ export function* getTicker() {
   const requestURL = `${url}/${pathParams}?${queryParams}`;
 
   try {
-    // Call our request helper (see 'utils/request')
     const ticker = yield call(request, requestURL, { method: 'GET' });
     yield put(tickerLoaded(ticker));
   } catch (err) {
@@ -57,7 +55,6 @@ export function* getTicker() {
   }
 }
 
-// Ticker list
 export function* getTickerList() {
   const requestURL = 'https://api-pub.bitfinex.com/v2/tickers?symbols=ALL';
 
@@ -69,11 +66,6 @@ export function* getTickerList() {
     yield put(tickerLoadingError(err));
   }
 }
-
-// Create actions
-// Store tickers in redux
-// Display as a dropdown
-// onselection, store selected ticker symbole in state
 
 /**
  * Root saga manages watcher lifecycle
