@@ -12,6 +12,9 @@ import {
   makeSelectTickerInfo,
 } from 'containers/App/selectors';
 
+import ListItem from 'components/ListItem';
+import List from 'components/List';
+import LoadingIndicator from 'components/LoadingIndicator';
 import { loadTicker, loadTickerList } from '../App/actions';
 import reducer from './reducer';
 import saga from './saga';
@@ -45,7 +48,19 @@ export function HomePage({
     loading,
     error,
     ticker,
+    selectedTicker,
   };
+
+  if (loading) {
+    return <List component={LoadingIndicator} />;
+  }
+
+  if (error !== false) {
+    const ErrorComponent = () => (
+      <ListItem item="Something went wrong, please try again!" />
+    );
+    return <List component={ErrorComponent} />;
+  }
 
   const tickerList = ticker && ticker.tickerList ? ticker.tickerList : [];
 

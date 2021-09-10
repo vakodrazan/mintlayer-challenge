@@ -5,9 +5,10 @@ import List from 'components/List';
 import ListItem from 'components/ListItem';
 import LoadingIndicator from 'components/LoadingIndicator';
 import Wrapper from './Wrapper';
-import TickerInfoList from '../TickerInfoList';
+import TickerInfoDetail from '../TickerInfoDetail';
+import H2 from '../H2';
 
-function TickerInfo({ loading, error, ticker }) {
+function TickerInfo({ loading, error, ticker, selectedTicker }) {
   const [
     bid,
     bidSize,
@@ -34,27 +35,23 @@ function TickerInfo({ loading, error, ticker }) {
 
   if (ticker.tickerInfo !== false) {
     return (
-      <Wrapper>
-        <TickerInfoList
-          firstItem="BTC/USD"
-          secondItem={`VOL ${volume} USD`}
-          thirdItem={`LOW ${low}`}
-        />
-        <TickerInfoList
-          firstItem={`last Price ${lastPrice}`}
-          secondItem={`daily Change: ${dailyChange} / ${dailyChangeRelative *
-            100}%`}
-          thirdItem={`HIGH ${high}`}
-        />
-        <TickerInfoList
-          firstItem={`Bid ${bid}`}
-          secondItem={`Bid size ${bidSize}`}
-        />
-        <TickerInfoList
-          firstItem={`Ask ${ask}`}
-          secondItem={`Ask size ${askSize}`}
-        />
-      </Wrapper>
+      <div>
+        <H2>{selectedTicker}</H2>
+        <Wrapper>
+          <TickerInfoDetail name="VOL" item={volume} />
+          <TickerInfoDetail name="LOW" item={low} />
+          <TickerInfoDetail name="last Price" item={lastPrice} />
+          <TickerInfoDetail
+            name="daily Change"
+            item={`${dailyChange} / ${dailyChangeRelative * 100}%`}
+          />
+          <TickerInfoDetail name="HIGH" item={high} />
+          <TickerInfoDetail name="Bid" item={bid} />
+          <TickerInfoDetail name="Bid size" item={bidSize} />
+          <TickerInfoDetail name="Ask" item={ask} />
+          <TickerInfoDetail name="Ask size" item={askSize} />
+        </Wrapper>
+      </div>
     );
   }
 
@@ -65,6 +62,7 @@ TickerInfo.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.any,
   ticker: PropTypes.any,
+  selectedTicker: PropTypes.string,
 };
 
 export default TickerInfo;
