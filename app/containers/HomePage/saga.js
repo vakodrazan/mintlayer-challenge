@@ -3,16 +3,24 @@
  */
 
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { LOAD_REPOS, LOAD_TICKER } from 'containers/App/constants';
+import {
+  LOAD_REPOS,
+  LOAD_TICKER,
+  LOAD_TICKER_LIST,
+} from 'containers/App/constants';
 import {
   reposLoaded,
   repoLoadingError,
   tickerLoaded,
   tickerLoadingError,
+  tickerListLoaded,
 } from 'containers/App/actions';
 
 import request from 'utils/request';
-import { makeSelectUsername } from 'containers/HomePage/selectors';
+import {
+  makeSelectUsername,
+  makeSelectTickerSymbol,
+} from 'containers/HomePage/selectors';
 
 /**
  * Github repos request/response handler
@@ -34,29 +42,44 @@ export function* getRepos() {
 export function* getTicker() {
   const url = 'https://api-pub.bitfinex.com/v2/';
 
-  const pathParams = 'ticker/tBTCUSD'; // Change these based on relevant path params
-  const queryParams = ''; // Change these based on relevant query params
+  const selectedTicker = yield select(makeSelectTickerSymbol());
+  const pathParams = `ticker/${selectedTicker}`;
+  const queryParams = '';
 
   const requestURL = `${url}/${pathParams}?${queryParams}`;
 
   try {
     // Call our request helper (see 'utils/request')
     const ticker = yield call(request, requestURL, { method: 'GET' });
-
     yield put(tickerLoaded(ticker));
   } catch (err) {
     yield put(tickerLoadingError(err));
   }
 }
 
+// Ticker list
+export function* getTickerList() {
+  const requestURL = 'https://api-pub.bitfinex.com/v2/tickers?symbols=ALL';
+
+  try {
+    const tickers = yield call(request, requestURL, { method: 'GET' });
+
+    yield put(tickerListLoaded(tickers));
+  } catch (err) {
+    yield put(tickerLoadingError(err));
+  }
+}
+
+// Create actions
+// Store tickers in redux
+// Display as a dropdown
+// onselection, store selected ticker symbole in state
+
 /**
  * Root saga manages watcher lifecycle
  */
 export default function* githubData() {
-  // Watches for LOAD_REPOS actions and calls getRepos when one comes in.
-  // By using `takeLatest` only the result of the latest API call is applied.
-  // It returns task descriptor (just like fork) so we can continue execution
-  // It will be cancelled automatically on component unmount
   yield takeLatest(LOAD_REPOS, getRepos);
   yield takeLatest(LOAD_TICKER, getTicker);
+  yield takeLatest(LOAD_TICKER_LIST, getTickerList);
 }

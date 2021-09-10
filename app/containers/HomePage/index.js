@@ -9,23 +9,37 @@ import { useInjectSaga } from 'utils/injectSaga';
 import {
   makeSelectLoading,
   makeSelectError,
-  makeSelectTicker,
+  makeSelectTickerInfo,
 } from 'containers/App/selectors';
 
-import { loadTicker } from '../App/actions';
+import { loadTicker, loadTickerList } from '../App/actions';
 import reducer from './reducer';
 import saga from './saga';
+import { selectTicker } from './actions';
+import { makeSelectTickerSymbol } from './selectors';
 import TickerInfo from '../../components/TickerInfo';
 
 const key = 'home';
 
-export function HomePage({ loading, error, getTicker, ticker }) {
+export function HomePage({
+  loading,
+  error,
+  selectedTicker,
+  getTicker,
+  ticker,
+  getTickerList,
+  onChangeTicker,
+}) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
   useEffect(() => {
-    getTicker();
+    getTickerList();
   }, []);
+
+  useEffect(() => {
+    getTicker();
+  }, [selectedTicker]);
 
   const tickerListProps = {
     loading,
@@ -33,8 +47,20 @@ export function HomePage({ loading, error, getTicker, ticker }) {
     ticker,
   };
 
+  const tickerList = ticker && ticker.tickerList ? ticker.tickerList : [];
+
   return (
     <article>
+      <select onChange={onChangeTicker} value={selectedTicker}>
+        {tickerList.map(item => {
+          const tickerSymbol = item[0];
+          return (
+            <option key={tickerSymbol} value={tickerSymbol}>
+              {tickerSymbol}
+            </option>
+          );
+        })}
+      </select>
       <TickerInfo {...tickerListProps} />
     </article>
   );
@@ -45,16 +71,24 @@ HomePage.propTypes = {
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   ticker: PropTypes.oneOfType([PropTypes.any, PropTypes.bool]),
   getTicker: PropTypes.func,
+  getTickerList: PropTypes.func,
+  selectedTicker: PropTypes.string,
+  onChangeTicker: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
   error: makeSelectError(),
-  ticker: makeSelectTicker(),
+  ticker: makeSelectTickerInfo(),
+  selectedTicker: makeSelectTickerSymbol(),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
+    onChangeTicker: event => dispatch(selectTicker(event.target.value)),
+    getTickerList: () => {
+      dispatch(loadTickerList());
+    },
     getTicker: () => {
       dispatch(loadTicker());
     },

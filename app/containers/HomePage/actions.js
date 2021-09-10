@@ -15,7 +15,7 @@
  *    }
  */
 
-import { CHANGE_USERNAME } from './constants';
+import { CHANGE_USERNAME, SELECT_TICKER } from './constants';
 
 /**
  * Changes the input field of the form
@@ -28,5 +28,12 @@ export function changeUsername(username) {
   return {
     type: CHANGE_USERNAME,
     username,
+  };
+}
+
+export function selectTicker(selectedTicker) {
+  return {
+    type: SELECT_TICKER,
+    selectedTicker,
   };
 }

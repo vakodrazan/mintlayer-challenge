@@ -13,4 +13,10 @@ const makeSelectUsername = () =>
     homeState => homeState.username,
   );
 
-export { selectHome, makeSelectUsername };
+const makeSelectTickerSymbol = () =>
+  createSelector(
+    selectHome,
+    homeState => homeState.selectedTicker,
+  );
+
+export { selectHome, makeSelectUsername, makeSelectTickerSymbol };

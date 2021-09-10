@@ -15,3 +15,8 @@ export const LOAD_REPOS_ERROR = 'boilerplate/App/LOAD_REPOS_ERROR';
 export const LOAD_TICKER = 'boilerplate/App/LOAD_TICKER';
 export const LOAD_TICKER_SUCCESS = 'boilerplate/App/LOAD_TICKER_SUCCESS';
 export const LOAD_TICKER_ERROR = 'boilerplate/App/LOAD_TICKER_ERROR';
+export const LOAD_TICKER_LIST = 'boilerplate/App/LOAD_TICKER_LIST,';
+export const LOAD_TICKER_LIST_SUCCESS =
+  'boilerplate/App/  LOAD_TICKER_LIST_SUCCESS,';
+export const LOAD_TICKER_LIST_ERROR =
+  'boilerplate/App/  LOAD_TICKER_LIST_ERROR';

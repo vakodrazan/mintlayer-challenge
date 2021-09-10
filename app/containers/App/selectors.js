@@ -39,7 +39,13 @@ const makeSelectLocation = () =>
     routerState => routerState.location,
   );
 
-const makeSelectTicker = () =>
+const makeSelectTickerInfo = () =>
+  createSelector(
+    selectGlobal,
+    globalState => globalState.ticker,
+  );
+
+const makeSelectTickerList = () =>
   createSelector(
     selectGlobal,
     globalState => globalState.ticker,
@@ -52,5 +58,6 @@ export {
   makeSelectError,
   makeSelectRepos,
   makeSelectLocation,
-  makeSelectTicker,
+  makeSelectTickerInfo,
+  makeSelectTickerList,
 };

@@ -15,6 +15,9 @@ import {
   LOAD_TICKER,
   LOAD_TICKER_SUCCESS,
   LOAD_TICKER_ERROR,
+  LOAD_TICKER_LIST,
+  LOAD_TICKER_LIST_SUCCESS,
+  LOAD_TICKER_LIST_ERROR,
 } from './constants';
 
 // The initial state of the App
@@ -27,6 +30,7 @@ export const initialState = {
   },
   ticker: {
     tickerInfo: false,
+    tickerList: false,
   },
 };
 
@@ -64,6 +68,23 @@ const appReducer = (state = initialState, action) =>
         break;
 
       case LOAD_TICKER_ERROR:
+        draft.error = action.error;
+        draft.loading = false;
+        break;
+
+      // Ticker list
+      case LOAD_TICKER_LIST:
+        draft.loading = true;
+        draft.error = false;
+        draft.ticker.tickerList = false;
+        break;
+
+      case LOAD_TICKER_LIST_SUCCESS:
+        draft.ticker.tickerList = action.ticker;
+        draft.loading = false;
+        break;
+
+      case LOAD_TICKER_LIST_ERROR:
         draft.error = action.error;
         draft.loading = false;
         break;

@@ -22,6 +22,9 @@ import {
   LOAD_TICKER,
   LOAD_TICKER_SUCCESS,
   LOAD_TICKER_ERROR,
+  LOAD_TICKER_LIST,
+  LOAD_TICKER_LIST_SUCCESS,
+  LOAD_TICKER_LIST_ERROR,
 } from './constants';
 
 /**
@@ -38,6 +41,11 @@ export function loadRepos() {
 export function loadTicker() {
   return {
     type: LOAD_TICKER,
+  };
+}
+export function loadTickerList() {
+  return {
+    type: LOAD_TICKER_LIST,
   };
 }
 
@@ -64,6 +72,13 @@ export function tickerLoaded(ticker) {
   };
 }
 
+export function tickerListLoaded(ticker) {
+  return {
+    type: LOAD_TICKER_LIST_SUCCESS,
+    ticker,
+  };
+}
+
 /**
  * Dispatched when loading the repositories fails
  *
@@ -81,6 +96,13 @@ export function repoLoadingError(error) {
 export function tickerLoadingError(error) {
   return {
     type: LOAD_TICKER_ERROR,
+    error,
+  };
+}
+
+export function tickerListLoadingError(error) {
+  return {
+    type: LOAD_TICKER_LIST_ERROR,
     error,
   };
 }
